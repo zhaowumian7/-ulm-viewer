@@ -43,9 +43,14 @@
         <div class="actions"><a class="button" href="viewer/">Open Track Viewer</a><a class="button secondary" href="volume/">Open Volume Viewer</a></div>
       </article>
       <article class="card">
-        <div><h2>Official Ultratrace Sample</h2><div class="tagrow"><span class="tag pending">downloading</span><span class="tag">~98 GiB</span><span class="tag">MACH beamforming</span></div></div>
-        <dl><dt>Source</dt><dd>alephneuro/microbubbles public sample</dd><dt>Status</dt><dd>Watcher runs first acquisition after download completes</dd><dt>Environment</dt><dd>WSL Ubuntu, CuPy GPU, MACH_AVAILABLE=True</dd><dt>Output</dt><dd><code>outputs/official_run</code></dd></dl>
-        <div class="actions"><a class="button disabled" href="#">Track Viewer Pending</a><a class="button disabled" href="#">Volume Viewer Pending</a></div>
+        <div><h2>Official Ultratrace Sample - Acq 0</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">public sample</span><span class="tag">700 frames</span></div></div>
+        <dl><dt>Source</dt><dd>alephneuro/microbubbles public sample</dd><dt>Tracks</dt><dd>66 tracks with length >= 5</dd><dt>Method</dt><dd>MACH beamforming + adaptive SVD tracking</dd><dt>Use</dt><dd>Completed first official acquisition</dd></dl>
+        <div class="actions"><a class="button" href="official_viewer_min5/">Open Track Viewer</a><a class="button secondary" href="official_volume_min5/">Open Volume Viewer</a></div>
+      </article>
+      <article class="card">
+        <div><h2>Official Ultratrace Sample - Full Run</h2><div class="tagrow"><span class="tag pending">running</span><span class="tag">5 / 223 done</span><span class="tag">incremental</span></div></div>
+        <dl><dt>Source</dt><dd>same 98 GiB public sample</dd><dt>Current view</dt><dd>Shows the latest combined viewer; currently acq 0 only</dd><dt>Progress</dt><dd>Background job is processing all 223 acquisitions</dd><dt>Upload</dt><dd>Will sync to GitHub Pages after completion</dd></dl>
+        <div class="actions"><a class="button" href="official_full_viewer/">Open Current Viewer</a></div>
       </article>
     </div>
     <section class="note"><strong>Review tip.</strong> Compare the first two cards. The abs^1/4 version compresses dynamic range before detection/tracking, so it produces fewer long tracks and may reduce dominance of very bright points, but it is also less physically direct than tracking on the original complex beamformed data.</section>

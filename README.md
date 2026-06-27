@@ -16,3 +16,5 @@ Large raw/intermediate files are intentionally excluded:
 - `*.h5`
 - `*.pkl`
 - official 98 GiB sample data
+
+- Official Ultratrace Sample - Full Tracks
