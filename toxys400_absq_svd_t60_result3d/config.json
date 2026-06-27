@@ -1,0 +1,5 @@
+{
+  "title": "toXYS abs^1/4 + SVD t60 - 3D Connected Tracks",
+  "description": "abs(complex)^0.25 followed by adaptive SVD using tissue frequency 60 Hz. Static 3D connected tracks, default display filters short tracks.",
+  "tracks": "data/tracks.bin"
+}

@@ -33,6 +33,11 @@
         <div class="actions"><a class="button" href="toxys400_absq_result3d/">Open 3D Result</a><a class="button secondary" href="toxys400_absq_viewer/">Track Viewer</a><a class="button secondary" href="toxys400_absq_volume/">Volume Viewer</a><a class="button secondary" href="toxys400_absq_result/">2D Projection</a></div>
       </article>
       <article class="card">
+        <div><h2>toXYS 400 Frames - abs^1/4 + SVD t60</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">adaptive SVD</span><span class="tag">tissue 60 Hz</span></div></div>
+        <dl><dt>Input</dt><dd>abs(US_real + 1i*US_imag)^0.25, then adaptive SVD</dd><dt>Tracks</dt><dd>5,624 total; 1,548 length >= 10; 16 length >= 35</dd><dt>SVD setting</dt><dd>adaptive spectral cutoff, tissue frequency 60 Hz</dd><dt>Use</dt><dd>Cleaner combined test; less aggressive than previous SVD</dd></dl>
+        <div class="actions"><a class="button" href="toxys400_absq_svd_t60_result3d/">Open 3D Result</a><a class="button secondary" href="toxys400_absq_svd_t60_viewer/">Track Viewer</a><a class="button secondary" href="toxys400_absq_svd_t60_volume/">Volume Viewer</a><a class="button secondary" href="toxys400_absq_svd_t60_result/">2D Projection</a></div>
+      </article>
+      <article class="card">
         <div><h2>toXYS 400 Frames - SVD</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">adaptive SVD</span><span class="tag">complex input</span></div></div>
         <dl><dt>Input</dt><dd>US_real + 1i*US_imag, then adaptive SVD filtering</dd><dt>Tracks</dt><dd>4,332 total; 227 length >= 5; 7 length >= 35</dd><dt>Viewer points</dt><dd>1,976 points for min length 5</dd><dt>Use</dt><dd>Closer to official microbubbles method; stricter clutter suppression</dd></dl>
         <div class="actions"><a class="button" href="toxys400_svd_result3d/">Open 3D Result</a><a class="button secondary" href="toxys400_svd_viewer/">Track Viewer</a><a class="button secondary" href="toxys400_svd_volume/">Volume Viewer</a><a class="button secondary" href="toxys400_svd_result/">2D Projection</a></div>

@@ -1,0 +1,5 @@
+{
+  "title": "toXYS abs^1/4 + SVD t60 - 2D Projection",
+  "description": "Static projection of abs^1/4 plus adaptive SVD t60 tracks.",
+  "tracks": "data/tracks.bin"
+}
