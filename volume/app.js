@@ -30,7 +30,7 @@ let tracks = [];
 let offsets = [];
 let backgroundOffsets = [];
 let frame = 0;
-let stage = "filtered";
+let stage = "detect";
 let playing = false;
 let timer = null;
 
@@ -59,35 +59,35 @@ let detectionHeadMaterial;
 const stages = {
   raw: {
     label: "raw/background",
-    backgroundAlpha: 1.35,
-    foregroundAlpha: 0.18,
-    pointScale: 1.0,
+    backgroundAlpha: 2.1,
+    foregroundAlpha: 0.45,
+    pointScale: 1.7,
     pointTone: 0.0,
     tracks: false,
     detections: false,
   },
   filtered: {
     label: "moving objects",
-    backgroundAlpha: 0.32,
-    foregroundAlpha: 1.15,
-    pointScale: 1.0,
+    backgroundAlpha: 0.75,
+    foregroundAlpha: 2.4,
+    pointScale: 2.4,
     pointTone: 0.0,
     tracks: false,
     detections: false,
   },
   detect: {
     label: "detections",
-    backgroundAlpha: 0.08,
-    foregroundAlpha: 1.35,
-    pointScale: 0.62,
+    backgroundAlpha: 0.45,
+    foregroundAlpha: 3.2,
+    pointScale: 1.8,
     pointTone: 1.0,
     tracks: false,
     detections: true,
   },
   track: {
     label: "final tracks",
-    backgroundAlpha: 0.0,
-    foregroundAlpha: 0.0,
+    backgroundAlpha: 0.18,
+    foregroundAlpha: 0.25,
     pointScale: 1.0,
     pointTone: 0.0,
     tracks: true,
@@ -261,8 +261,8 @@ function makeBackgroundPlaneMaterial(texture, baseAlpha) {
         vec3 high = vec3(0.58, 0.76, 0.80);
         vec3 color = mix(low, mid, smoothstep(0.04, 0.72, tissue));
         color = mix(color, high, smoothstep(0.72, 1.0, tissue));
-        float alpha = (0.01 + 0.58 * tissue) * baseAlpha * alphaScale;
-        if (alpha < 0.008) discard;
+        float alpha = (0.06 + 0.92 * tissue) * baseAlpha * alphaScale;
+        if (alpha < 0.002) discard;
         gl_FragColor = vec4(color, alpha);
       }
     `,
@@ -315,8 +315,8 @@ function addBackgroundPlanes(xb, yb, zb) {
 
 function initScene() {
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x06070a);
-  scene.fog = new THREE.FogExp2(0x06070a, 0.012);
+  scene.background = new THREE.Color(0x111821);
+  scene.fog = new THREE.FogExp2(0x111821, 0.004);
 
   renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -359,7 +359,7 @@ function initScene() {
 
   pointMaterial = new THREE.ShaderMaterial({
     uniforms: {
-      pointSize: { value: Number(pointSizeInput.value) },
+      pointSize: { value: Math.max(3.2, Number(pointSizeInput.value)) },
       pixelRatio: { value: renderer.getPixelRatio() },
       alphaScale: { value: 0.0 },
       pointScale: { value: 1.0 },
@@ -376,7 +376,7 @@ function initScene() {
         vIntensity = intensity;
         vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
         float attenuation = 220.0 / max(120.0, -mvPosition.z);
-        gl_PointSize = clamp(pointSize * pointScale * pixelRatio * (0.70 + intensity * 0.95) * attenuation, 0.8, 10.0);
+        gl_PointSize = clamp(pointSize * pointScale * pixelRatio * (1.10 + intensity * 1.70) * attenuation, 2.0, 24.0);
         gl_Position = projectionMatrix * mvPosition;
       }
     `,
@@ -412,8 +412,8 @@ function initScene() {
         float radius = length(uv);
         float core = smoothstep(0.46, 0.12, radius);
         float halo = smoothstep(0.50, 0.01, radius) * mix(0.24, 0.12, pointTone);
-        float alpha = max(core, halo) * (0.34 + 0.66 * vIntensity) * alphaScale;
-        if (alpha < 0.015) discard;
+        float alpha = max(core, halo) * (0.62 + 1.15 * vIntensity) * alphaScale;
+        if (alpha < 0.004) discard;
         gl_FragColor = vec4(mix(svdRamp(vIntensity), detectRamp(vIntensity), pointTone), alpha);
       }
     `,
@@ -816,8 +816,11 @@ async function main() {
       : "";
   statusEl.textContent = `${meta.frames} frames | ${tracks.length} tracks | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
   initScene();
-  setStage("filtered");
-  setFrame(0);
+  detectBtn.disabled = false;
+  trackBtn.disabled = false;
+  const bestFrame = (meta.counts || []).reduce((best, count, idx, arr) => count > (arr[best] || 0) ? idx : best, 0);
+  setStage("detect");
+  setFrame(bestFrame);
   animate();
 }
 
