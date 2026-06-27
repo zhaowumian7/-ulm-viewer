@@ -1,4 +1,4 @@
-import * as THREE from "three";
+﻿import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const viewport = document.getElementById("viewport");
@@ -30,7 +30,7 @@ let tracks = [];
 let offsets = [];
 let backgroundOffsets = [];
 let frame = 0;
-let stage = "raw";
+let stage = "filtered";
 let playing = false;
 let timer = null;
 
@@ -59,8 +59,8 @@ let detectionHeadMaterial;
 const stages = {
   raw: {
     label: "raw/background",
-    backgroundAlpha: 1.0,
-    foregroundAlpha: 0.0,
+    backgroundAlpha: 1.35,
+    foregroundAlpha: 0.18,
     pointScale: 1.0,
     pointTone: 0.0,
     tracks: false,
@@ -68,8 +68,8 @@ const stages = {
   },
   filtered: {
     label: "moving objects",
-    backgroundAlpha: 0.18,
-    foregroundAlpha: 0.82,
+    backgroundAlpha: 0.32,
+    foregroundAlpha: 1.15,
     pointScale: 1.0,
     pointTone: 0.0,
     tracks: false,
@@ -816,6 +816,7 @@ async function main() {
       : "";
   statusEl.textContent = `${meta.frames} frames | ${tracks.length} tracks | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
   initScene();
+  setStage("filtered");
   setFrame(0);
   animate();
 }
@@ -865,3 +866,4 @@ main().catch((err) => {
   console.error(err);
   statusEl.textContent = err.message;
 });
+
