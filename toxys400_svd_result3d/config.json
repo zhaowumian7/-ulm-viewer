@@ -1,0 +1,5 @@
+{
+  "title": "toXYS 400 Frames SVD - 3D Connected Tracks",
+  "description": "Static 3D connected-track result from adaptive SVD-filtered detections.",
+  "tracks": "data/tracks.bin"
+}

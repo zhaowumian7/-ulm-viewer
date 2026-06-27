@@ -1,0 +1,5 @@
+{
+  "title": "Official Ultratrace Full Run - 3D Connected Tracks",
+  "description": "Current incremental static 3D connected-track result. It is regenerated as more acquisitions finish.",
+  "tracks": "data/tracks.bin"
+}

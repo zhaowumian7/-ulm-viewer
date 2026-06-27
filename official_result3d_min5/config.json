@@ -1,0 +1,5 @@
+{
+  "title": "Official Ultratrace Acq 0 - 3D Connected Tracks",
+  "description": "Static 3D connected-track result from the public sample acquisition 0.",
+  "tracks": "data/tracks.bin"
+}

@@ -1,0 +1,5 @@
+{
+  "title": "toXYS 400 Frames abs^1/4 - 3D Connected Tracks",
+  "description": "Static 3D connected-track result after abs(complex)^0.25 preprocessing.",
+  "tracks": "data/tracks.bin"
+}
