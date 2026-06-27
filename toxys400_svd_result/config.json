@@ -1,0 +1,5 @@
+{
+  "title": "toXYS 400 Frames - SVD Result Map",
+  "description": "Static accumulated ULM result from adaptive SVD-filtered detections.",
+  "tracks": "data/tracks.bin"
+}

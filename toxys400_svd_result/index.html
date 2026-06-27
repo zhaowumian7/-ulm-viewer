@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ULM Result Map</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1 id="title">ULM Result Map</h1>
+      <p id="description"></p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </header>
+  <main>
+    <section class="panel large">
+      <div class="panel-head">
+        <h2>Velocity Map</h2>
+        <span>tracks colored by speed</span>
+      </div>
+      <canvas id="velocity"></canvas>
+      <div class="legend"><span>slow</span><div class="bar velocity"></div><span>fast</span></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Density Map</h2>
+        <span>all localizations accumulated</span>
+      </div>
+      <canvas id="density"></canvas>
+      <div class="legend"><span>low</span><div class="bar density"></div><span>high</span></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Depth Projection</h2>
+        <span>x-z projection of linked tracks</span>
+      </div>
+      <canvas id="depth"></canvas>
+      <div class="legend"><span>shallow</span><div class="bar depth"></div><span>deep</span></div>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "title": "Official Ultratrace Acq 0 - Result Map",
+  "description": "Static accumulated result from the public sample acquisition 0 using MACH beamforming and adaptive SVD tracking.",
+  "tracks": "data/tracks.bin"
+}

@@ -25,17 +25,17 @@
       <article class="card">
         <div><h2>toXYS 400 Frames - Complex</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1 + Acq2</span><span class="tag">complex input</span></div></div>
         <dl><dt>Input</dt><dd>US_real + 1i*US_imag</dd><dt>Tracks</dt><dd>19,420 total; 2,643 length >= 35</dd><dt>Viewer points</dt><dd>310,305 points</dd><dt>Use</dt><dd>Baseline microbubbles tracking result</dd></dl>
-        <div class="actions"><a class="button" href="toxys400_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_volume/">Open Volume Viewer</a></div>
+        <div class="actions"><a class="button" href="toxys400_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_volume/">Open Volume Viewer</a><a class="button secondary" href="toxys400_result/">Open Result Map</a></div>
       </article>
       <article class="card">
         <div><h2>toXYS 400 Frames - abs^1/4</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1 + Acq2</span><span class="tag">compressed magnitude</span></div></div>
         <dl><dt>Input</dt><dd>abs(US_real + 1i*US_imag)^0.25</dd><dt>Tracks</dt><dd>9,273 total; 1,160 length >= 35</dd><dt>Viewer points</dt><dd>133,666 points</dd><dt>Use</dt><dd>Cleaner-looking contrast test for your review</dd></dl>
-        <div class="actions"><a class="button" href="toxys400_absq_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_absq_volume/">Open Volume Viewer</a></div>
+        <div class="actions"><a class="button" href="toxys400_absq_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_absq_volume/">Open Volume Viewer</a><a class="button secondary" href="toxys400_absq_result/">Open Result Map</a></div>
       </article>
       <article class="card">
         <div><h2>toXYS 400 Frames - SVD</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">adaptive SVD</span><span class="tag">complex input</span></div></div>
         <dl><dt>Input</dt><dd>US_real + 1i*US_imag, then adaptive SVD filtering</dd><dt>Tracks</dt><dd>4,332 total; 227 length >= 5; 7 length >= 35</dd><dt>Viewer points</dt><dd>1,976 points for min length 5</dd><dt>Use</dt><dd>Closer to official microbubbles method; stricter clutter suppression</dd></dl>
-        <div class="actions"><a class="button" href="toxys400_svd_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_svd_volume/">Open Volume Viewer</a></div>
+        <div class="actions"><a class="button" href="toxys400_svd_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_svd_volume/">Open Volume Viewer</a><a class="button secondary" href="toxys400_svd_result/">Open Result Map</a></div>
       </article>
       <article class="card">
         <div><h2>toXYS Pilot 30 Frames</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1</span><span class="tag">30 frames</span></div></div>
@@ -45,12 +45,12 @@
       <article class="card">
         <div><h2>Official Ultratrace Sample - Acq 0</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">public sample</span><span class="tag">700 frames</span></div></div>
         <dl><dt>Source</dt><dd>alephneuro/microbubbles public sample</dd><dt>Tracks</dt><dd>66 tracks with length >= 5</dd><dt>Method</dt><dd>MACH beamforming + adaptive SVD tracking</dd><dt>Use</dt><dd>Completed first official acquisition</dd></dl>
-        <div class="actions"><a class="button" href="official_viewer_min5/">Open Track Viewer</a><a class="button secondary" href="official_volume_min5/">Open Volume Viewer</a></div>
+        <div class="actions"><a class="button" href="official_viewer_min5/">Open Track Viewer</a><a class="button secondary" href="official_volume_min5/">Open Volume Viewer</a><a class="button secondary" href="official_result_min5/">Open Result Map</a></div>
       </article>
       <article class="card">
-        <div><h2>Official Ultratrace Sample - Full Run</h2><div class="tagrow"><span class="tag pending">running</span><span class="tag">5 / 223 done</span><span class="tag">incremental</span></div></div>
-        <dl><dt>Source</dt><dd>same 98 GiB public sample</dd><dt>Current view</dt><dd>Shows the latest combined viewer; currently acq 0 only</dd><dt>Progress</dt><dd>Background job is processing all 223 acquisitions</dd><dt>Upload</dt><dd>Will sync to GitHub Pages after completion</dd></dl>
-        <div class="actions"><a class="button" href="official_full_viewer/">Open Current Viewer</a></div>
+        <div><h2>Official Ultratrace Sample - Full Run</h2><div class="tagrow"><span class="tag pending">running</span><span class="tag">8 / 223 done</span><span class="tag">incremental</span></div></div>
+        <dl><dt>Source</dt><dd>same 98 GiB public sample</dd><dt>Current view</dt><dd>Shows the latest combined viewer and static result map</dd><dt>Progress</dt><dd>Background job is processing all 223 acquisitions</dd><dt>Upload</dt><dd>Will sync to GitHub Pages after completion</dd></dl>
+        <div class="actions"><a class="button" href="official_full_viewer/">Open Current Viewer</a><a class="button secondary" href="official_full_result/">Open Result Map</a></div>
       </article>
     </div>
     <section class="note"><strong>Review tip.</strong> Compare the first two cards. The abs^1/4 version compresses dynamic range before detection/tracking, so it produces fewer long tracks and may reduce dominance of very bright points, but it is also less physically direct than tracking on the original complex beamformed data.</section>

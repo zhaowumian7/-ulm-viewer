@@ -1,0 +1,5 @@
+{
+  "title": "toXYS 400 Frames - abs^1/4 Result Map",
+  "description": "Static accumulated ULM result after abs(complex)^0.25 display compression before tracking.",
+  "tracks": "data/tracks.bin"
+}

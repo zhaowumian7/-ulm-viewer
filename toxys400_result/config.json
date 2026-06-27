@@ -1,0 +1,5 @@
+{
+  "title": "toXYS 400 Frames - Complex Result Map",
+  "description": "Static accumulated ULM result: linked microbubble tracks with velocity coloring, density map, and x-z projection.",
+  "tracks": "data/tracks.bin"
+}
