@@ -762,7 +762,7 @@ async function main() {
   const base = metaUrl.includes("/") ? metaUrl.slice(0, metaUrl.lastIndexOf("/") + 1) : "";
   const planeEntries = Object.entries(meta.background_planes?.planes || {});
   const hasPlaneBackground = planeEntries.length > 0;
-  const tracksPromise = loadJson(query("tracks", base + (meta.tracks || "tracks.json")));
+
   const pointsPromise = loadBuffer(query("points", base + (meta.points || "points.bin")));
   const planePromises = planeEntries.map(([name, plane]) =>
     loadBuffer(query(`background${name.toUpperCase()}`, base + plane.file)).then((buffer) => [name, buffer]),
@@ -779,22 +779,17 @@ async function main() {
     !hasPlaneBackground && meta.background_points && meta.background_counts
       ? loadBuffer(query("background", base + meta.background_points))
       : Promise.resolve(null);
-  const [
-    tracksPayload,
-    pointsPayload,
-    planePayloads,
-    backgroundPositionsPayload,
-    backgroundIntensitiesPayload,
-    legacyBackground,
-  ] = await Promise.all([
-    tracksPromise,
-    pointsPromise,
-    Promise.all(planePromises),
-    backgroundPositionsPromise,
-    backgroundIntensitiesPromise,
-    legacyBackgroundPromise,
-  ]);
-  tracks = tracksPayload.tracks || [];
+
+  const [pointsPayload, planePayloads, backgroundPositionsPayload, backgroundIntensitiesPayload, legacyBackground] =
+    await Promise.all([
+      pointsPromise,
+      Promise.all(planePromises),
+      backgroundPositionsPromise,
+      backgroundIntensitiesPromise,
+      legacyBackgroundPromise,
+    ]);
+
+  tracks = [];
   pointBuffer = pointsPayload;
   offsets = buildOffsets(meta.counts);
   backgroundPlaneBuffers = Object.fromEntries(planePayloads);
@@ -814,7 +809,7 @@ async function main() {
     : meta.background_display
       ? ` | ${meta.background_display.max_points_per_frame} bg samples`
       : "";
-  statusEl.textContent = `${meta.frames} frames | ${tracks.length} tracks | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
+  statusEl.textContent = `${meta.frames} frames | loading tracks in background | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
   initScene();
   detectBtn.disabled = false;
   trackBtn.disabled = false;
@@ -822,8 +817,19 @@ async function main() {
   setStage("detect");
   setFrame(bestFrame);
   animate();
-}
 
+  loadJson(query("tracks", base + (meta.tracks || "tracks.json")))
+    .then((tracksPayload) => {
+      tracks = tracksPayload.tracks || [];
+      statusEl.textContent = `${meta.frames} frames | ${tracks.length} tracks | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
+      trackStaticBuilt = false;
+      setFrame(frame);
+    })
+    .catch((err) => {
+      console.warn("tracks overlay failed to load", err);
+      statusEl.textContent = `${meta.frames} frames | tracks unavailable | ${meta.display.max_points_per_frame} SVD voxels${backgroundStatus}`;
+    });
+}
 filterBtn.addEventListener("click", () => setStage("filtered"));
 detectBtn.addEventListener("click", () => setStage("detect"));
 trackBtn.addEventListener("click", () => setStage("track"));
