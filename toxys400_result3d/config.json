@@ -1,5 +1,5 @@
 {
   "title": "toXYS 400 Frames - 3D Connected Tracks",
-  "description": "Static 3D ULM result: every tracked microbubble path is connected as a continuous vessel-like line. Color is speed by default, following PALA's final MatOut/velocity summary idea in 3D.",
+  "description": "Static 3D ULM result: tracked microbubble paths are connected as continuous 3D lines. The minimum track length filter removes short unreliable paths.",
   "tracks": "data/tracks.bin"
 }

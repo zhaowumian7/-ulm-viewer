@@ -78,6 +78,7 @@ class StaticTrackScene {
     this.data = data;
     this.params = {
       colorBy: "speed",
+      minTrackLength: 15,
       maxSpeedPercentile: 98,
       lineOpacity: 0.82,
       lineWidth: 2.6,
@@ -155,11 +156,12 @@ class StaticTrackScene {
 
   addLines() {
     const d = this.data, fpp = d.floatsPerPoint;
-    const segmentCount = d.tracks.reduce((sum, t) => sum + Math.max(0, t.length - 1), 0);
+    const tracks = d.tracks.filter(t => t.length >= this.params.minTrackLength);
+    const segmentCount = tracks.reduce((sum, t) => sum + Math.max(0, t.length - 1), 0);
     const positions = new Float32Array(segmentCount * 2 * 3);
     const colors = new Float32Array(segmentCount * 2 * 3);
     let p = 0, c = 0;
-    for (const track of d.tracks) {
+    for (const track of tracks) {
       for (let i = 1; i < track.length; i++) {
         const a = (track.offset + i - 1) * fpp;
         const b = (track.offset + i) * fpp;
@@ -193,17 +195,27 @@ class StaticTrackScene {
   addPoints() {
     const d = this.data, fpp = d.floatsPerPoint;
     const maxPoints = 180000;
-    const step = Math.max(1, Math.ceil(d.totalPoints / maxPoints));
-    const count = Math.ceil(d.totalPoints / step);
+    const tracks = d.tracks.filter(t => t.length >= this.params.minTrackLength);
+    const visiblePoints = tracks.reduce((sum, t) => sum + t.length, 0);
+    const step = Math.max(1, Math.ceil(visiblePoints / maxPoints));
+    const count = Math.ceil(visiblePoints / step);
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     let p = 0, c = 0;
-    for (let i = 0; i < d.totalPoints; i += step) {
-      const o = i * fpp;
-      const pos = this.centerPoint(d.points[o], d.points[o + 1], d.points[o + 2]).map(v => v * this.scale);
-      positions.set(pos, p); p += 3;
-      const col = this.colorFor(d.points[o], d.points[o + 1], d.points[o + 2], d.points[o + 4]);
-      colors.set([col.r, col.g, col.b], c); c += 3;
+    let visibleIndex = 0;
+    for (const track of tracks) {
+      for (let i = 0; i < track.length; i++) {
+        if (visibleIndex % step !== 0) {
+          visibleIndex++;
+          continue;
+        }
+        const o = (track.offset + i) * fpp;
+        const pos = this.centerPoint(d.points[o], d.points[o + 1], d.points[o + 2]).map(v => v * this.scale);
+        positions.set(pos, p); p += 3;
+        const col = this.colorFor(d.points[o], d.points[o + 1], d.points[o + 2], d.points[o + 4]);
+        colors.set([col.r, col.g, col.b], c); c += 3;
+        visibleIndex++;
+      }
     }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -231,6 +243,10 @@ class StaticTrackScene {
   addGui() {
     const gui = new GUI({ title: "3D Result" });
     gui.add(this.params, "colorBy", ["speed", "depth", "time"]).name("Color").onChange(() => this.build());
+    gui.add(this.params, "minTrackLength", 2, 200, 1).name("Min track length").onChange(() => {
+      this.build();
+      renderStats(this.data, this.params.minTrackLength);
+    });
     gui.add(this.params, "lineOpacity", 0.05, 1.0, 0.01).name("Line opacity").onChange(v => { if (this.lines) this.lines.material.opacity = v; });
     gui.add(this.params, "lineWidth", 0.4, 6.0, 0.1).name("Line width").onChange(v => { if (this.lines) this.lines.material.linewidth = v; });
     gui.add(this.params, "showPoints").name("Show points").onChange(() => this.build());
@@ -263,13 +279,18 @@ class StaticTrackScene {
   }
 }
 
-function renderStats(data) {
+function renderStats(data, minTrackLength = 15) {
   const lengths = data.tracks.map(t => t.length).sort((a, b) => a - b);
+  const visibleTracks = data.tracks.filter(t => t.length >= minTrackLength);
+  const visiblePoints = visibleTracks.reduce((sum, t) => sum + t.length, 0);
   const mean = lengths.reduce((a, b) => a + b, 0) / Math.max(1, lengths.length);
   const p95 = lengths[Math.floor(lengths.length * 0.95)] || 0;
   document.getElementById("stats").innerHTML = `
     <span>tracks</span><b>${data.nTracks.toLocaleString()}</b>
     <span>points</span><b>${data.totalPoints.toLocaleString()}</b>
+    <span>shown tracks</span><b>${visibleTracks.length.toLocaleString()}</b>
+    <span>shown points</span><b>${visiblePoints.toLocaleString()}</b>
+    <span>min length</span><b>${minTrackLength}</b>
     <span>mean length</span><b>${mean.toFixed(1)}</b>
     <span>p95 length</span><b>${p95}</b>
     <span>max speed</span><b>${data.maxSpeed.toFixed(4)} mm/frame</b>
@@ -287,8 +308,8 @@ async function main() {
   desc.textContent = cfg.description || "";
   if (!cfg.description) desc.style.display = "none";
   const data = await loadTracks(cfg.tracks || "data/tracks.bin");
-  renderStats(data);
-  new StaticTrackScene(data);
+  const scene = new StaticTrackScene(data);
+  renderStats(data, scene.params.minTrackLength);
 }
 
 main().catch((err) => {

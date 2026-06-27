@@ -1,5 +1,5 @@
 {
   "title": "toXYS 400 Frames SVD - 3D Connected Tracks",
-  "description": "Static 3D connected-track result from adaptive SVD-filtered detections.",
+  "description": "Static 3D connected-track result from adaptive SVD-filtered detections. Use Min track length to suppress short paths.",
   "tracks": "data/tracks.bin"
 }

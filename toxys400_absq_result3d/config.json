@@ -1,5 +1,5 @@
 {
   "title": "toXYS 400 Frames abs^1/4 - 3D Connected Tracks",
-  "description": "Static 3D connected-track result after abs(complex)^0.25 preprocessing.",
+  "description": "Static 3D connected-track result after abs(complex)^0.25 preprocessing. Use Min track length to suppress short paths.",
   "tracks": "data/tracks.bin"
 }
