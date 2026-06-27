@@ -1,0 +1,149 @@
+{
+  "source": "from_toXYS_beamformed_30f.h5",
+  "points": "points.bin",
+  "background_positions": "background_positions.bin",
+  "background_intensities": "background_intensities.bin",
+  "background_position_record_bytes": 6,
+  "background_planes": {
+    "scale_percentile": 99.8,
+    "scale_value": 13787719.0,
+    "dynamic_range_db": 45.0,
+    "dtype": "uint8",
+    "mode": "orthogonal_raw_mip_planes",
+    "planes": {
+      "xz": {
+        "file": "background_xz.raw",
+        "width": 221,
+        "height": 81
+      },
+      "xy": {
+        "file": "background_xy.raw",
+        "width": 221,
+        "height": 201
+      },
+      "yz": {
+        "file": "background_yz.raw",
+        "width": 201,
+        "height": 81
+      }
+    }
+  },
+  "tracks": "tracks.json",
+  "record_bytes": 8,
+  "frames": 30,
+  "fps": 30.0,
+  "tail_frames": 18,
+  "counts": [
+    3250,
+    2525,
+    4962,
+    962,
+    8000,
+    929,
+    958,
+    986,
+    1791,
+    2904,
+    618,
+    8000,
+    708,
+    6279,
+    603,
+    637,
+    8000,
+    581,
+    745,
+    540,
+    766,
+    8000,
+    929,
+    446,
+    2230,
+    292,
+    8000,
+    296,
+    407,
+    2119
+  ],
+  "background_counts": [
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000,
+    18000
+  ],
+  "shape": {
+    "elev": 201,
+    "z": 81,
+    "x": 221
+  },
+  "acq_ids": [
+    0
+  ],
+  "frames_per_acq": 30,
+  "bounds_mm": {
+    "x": [
+      -30.0,
+      25.0
+    ],
+    "y": [
+      -25.0,
+      25.0
+    ],
+    "z": [
+      -27.0,
+      -7.0
+    ]
+  },
+  "display": {
+    "scale_percentile": 99.7,
+    "scale_value": 771676.0625,
+    "voxel_percentile": 99.9,
+    "voxel_threshold": 949526.5625,
+    "dynamic_range_db": 15.0,
+    "max_points_per_frame": 8000
+  },
+  "background_display": {
+    "scale_percentile": 99.8,
+    "scale_value": 13787719.0,
+    "dynamic_range_db": 45.0,
+    "max_points_per_frame": 18000,
+    "sample_count": 18000,
+    "sample_seed": 0,
+    "mode": "random_full_volume_sample"
+  },
+  "presentation": {
+    "background_intro_seconds": 1.5,
+    "subtraction_fade_seconds": 1.0
+  },
+  "svd": {
+    "low_cutoff": 0.1,
+    "high_cutoff": null,
+    "temporal_sigma": 0.0
+  }
+}

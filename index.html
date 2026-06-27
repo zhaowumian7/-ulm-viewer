@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D ULM Experiments</title>
+  <style>
+    :root { color-scheme: dark; --bg:#080a0e; --panel:#111722; --text:#e8eef7; --muted:#8d9aab; --line:#263143; --accent:#3dd6b5; --accent2:#7aa7ff; --warn:#f3bd5b; }
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 35% 0%,#142239 0,transparent 36rem),var(--bg);color:var(--text)}
+    header{padding:34px 40px 20px;border-bottom:1px solid var(--line);background:rgba(8,10,14,.72);backdrop-filter:blur(12px)}
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px);font-weight:720;letter-spacing:0}.subtitle{max-width:920px;color:var(--muted);font-size:16px;line-height:1.55}
+    main{padding:30px 40px 46px;max-width:1380px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(21,29,41,.96),rgba(13,18,27,.96));border-radius:8px;padding:18px;min-height:278px;display:flex;flex-direction:column;gap:14px;box-shadow:0 16px 48px rgba(0,0,0,.26)}
+    .card h2{margin:0;font-size:20px;font-weight:680;letter-spacing:0}.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.tag{border:1px solid #334053;color:#b7c4d8;border-radius:999px;padding:4px 9px;font-size:12px}.tag.ready{border-color:rgba(61,214,181,.55);color:var(--accent)}.tag.pending{border-color:rgba(243,189,91,.58);color:var(--warn)}
+    dl{display:grid;grid-template-columns:118px 1fr;gap:8px 12px;margin:0;color:var(--muted);font-size:14px}dt{color:#c8d4e5}dd{margin:0}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}a.button{text-decoration:none;color:#07110f;background:var(--accent);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:10px 12px;font-weight:700;font-size:14px}a.button.secondary{background:var(--accent2);color:#07101f}a.button.disabled{pointer-events:none;background:#394150;color:#9fa8b7}
+    .note{margin-top:28px;border:1px solid var(--line);background:rgba(17,23,34,.7);border-radius:8px;padding:16px 18px;color:var(--muted);line-height:1.55}code{color:#d9e6ff}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>3D ULM Experiments</h1>
+    <div class="subtitle">Interactive browser viewers for toXYS 3D ULM runs. The two 400-frame cards are the main comparison: raw complex input versus display-compressed <code>abs(complex)^0.25</code> input.</div>
+  </header>
+  <main>
+    <div class="grid">
+      <article class="card">
+        <div><h2>toXYS 400 Frames - Complex</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1 + Acq2</span><span class="tag">complex input</span></div></div>
+        <dl><dt>Input</dt><dd>US_real + 1i*US_imag</dd><dt>Tracks</dt><dd>19,420 total; 2,643 length >= 35</dd><dt>Viewer points</dt><dd>310,305 points</dd><dt>Use</dt><dd>Baseline microbubbles tracking result</dd></dl>
+        <div class="actions"><a class="button" href="toxys400_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_volume/">Open Volume Viewer</a></div>
+      </article>
+      <article class="card">
+        <div><h2>toXYS 400 Frames - abs^1/4</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1 + Acq2</span><span class="tag">compressed magnitude</span></div></div>
+        <dl><dt>Input</dt><dd>abs(US_real + 1i*US_imag)^0.25</dd><dt>Tracks</dt><dd>9,273 total; 1,160 length >= 35</dd><dt>Viewer points</dt><dd>133,666 points</dd><dt>Use</dt><dd>Cleaner-looking contrast test for your review</dd></dl>
+        <div class="actions"><a class="button" href="toxys400_absq_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_absq_volume/">Open Volume Viewer</a></div>
+      </article>
+      <article class="card">
+        <div><h2>toXYS 400 Frames - SVD</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">adaptive SVD</span><span class="tag">complex input</span></div></div>
+        <dl><dt>Input</dt><dd>US_real + 1i*US_imag, then adaptive SVD filtering</dd><dt>Tracks</dt><dd>4,332 total; 227 length >= 5; 7 length >= 35</dd><dt>Viewer points</dt><dd>1,976 points for min length 5</dd><dt>Use</dt><dd>Closer to official microbubbles method; stricter clutter suppression</dd></dl>
+        <div class="actions"><a class="button" href="toxys400_svd_viewer/">Open Track Viewer</a><a class="button secondary" href="toxys400_svd_volume/">Open Volume Viewer</a></div>
+      </article>
+      <article class="card">
+        <div><h2>toXYS Pilot 30 Frames</h2><div class="tagrow"><span class="tag ready">ready</span><span class="tag">Acq1</span><span class="tag">30 frames</span></div></div>
+        <dl><dt>Input</dt><dd>First 30 frames complex input</dd><dt>Tracks</dt><dd>2,327 total; 1,155 length >= 10</dd><dt>Purpose</dt><dd>Fast initial sanity check</dd><dt>Method</dt><dd>Microbubbles Kalman tracking</dd></dl>
+        <div class="actions"><a class="button" href="viewer/">Open Track Viewer</a><a class="button secondary" href="volume/">Open Volume Viewer</a></div>
+      </article>
+      <article class="card">
+        <div><h2>Official Ultratrace Sample</h2><div class="tagrow"><span class="tag pending">downloading</span><span class="tag">~98 GiB</span><span class="tag">MACH beamforming</span></div></div>
+        <dl><dt>Source</dt><dd>alephneuro/microbubbles public sample</dd><dt>Status</dt><dd>Watcher runs first acquisition after download completes</dd><dt>Environment</dt><dd>WSL Ubuntu, CuPy GPU, MACH_AVAILABLE=True</dd><dt>Output</dt><dd><code>outputs/official_run</code></dd></dl>
+        <div class="actions"><a class="button disabled" href="#">Track Viewer Pending</a><a class="button disabled" href="#">Volume Viewer Pending</a></div>
+      </article>
+    </div>
+    <section class="note"><strong>Review tip.</strong> Compare the first two cards. The abs^1/4 version compresses dynamic range before detection/tracking, so it produces fewer long tracks and may reduce dominance of very bright points, but it is also less physically direct than tracking on the original complex beamformed data.</section>
+  </main>
+</body>
+</html>
+
